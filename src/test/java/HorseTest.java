@@ -1,12 +1,11 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
+
 
 
 public class HorseTest {
@@ -37,7 +36,6 @@ public class HorseTest {
         @Test
         public void constructor_thirdParam_is_NegativeNumber_and_exception_message_test(){
             String expected = "Distance cannot be negative.";
-            //IOexe
             Throwable throwable = Assertions.assertThrows(IllegalArgumentException.class,()->new Horse("Slevin",1,-1));
             Assertions.assertEquals(expected,throwable.getMessage());
         }
@@ -64,7 +62,7 @@ public class HorseTest {
             String actual = String.valueOf(horse.getDistance());
             Assertions.assertEquals(expected,actual);
             Horse horse2 = new Horse("Pegas",1.1);
-            String expected2 = "0.0";
+            String expected2 = "0.0";//0.0
             String actual2 = String.valueOf(horse2.getDistance());
             Assertions.assertEquals(expected2,actual2);
         }
@@ -73,10 +71,10 @@ public class HorseTest {
             public void move_test(double arg){
                 try(MockedStatic<Horse> mocked = Mockito.mockStatic(Horse.class);){
                  mocked.when(()->Horse.getRandomDouble(0.2, 0.9)).thenReturn(arg);
-                 Horse horse1 = new Horse("Pony",2.2);
+                 Horse horse1 = new Horse("Pony",2.2,1.1);
                  Double expectedDistance = horse1.getDistance()+ horse1.getSpeed() * Horse.getRandomDouble(0.2, 0.9);
                  horse1.move();
-                 Assertions.assertEquals(expectedDistance,horse1.getDistance());
+                 Assertions.assertEquals(expectedDistance,horse1.getDistance());//2 param horse1.getDistance()
                 }catch (Exception e){}
             }
     }
